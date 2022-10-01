@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -11,10 +12,13 @@
     "url": "git+https://github.com/e2rabi/Ishop-ui-admin.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Errabi Ayoub",
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/e2rabi/Ishop-ui-admin/issues"
   },
-  "homepage": "https://github.com/e2rabi/Ishop-ui-admin#readme"
+  "homepage": "https://github.com/e2rabi/Ishop-ui-admin#readme",
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  }
 }
