@@ -1,3 +1,6 @@
+import React from "react";
+import { ReactDOM } from "react-dom";
+
 const User = (props) => {
     return React.createElement("div", {}, [
         React.createElement("h2", {}, props.name),
