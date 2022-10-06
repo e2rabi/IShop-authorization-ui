@@ -89,7 +89,7 @@ font-weight: 300;
 color: #e5e5e5;
 }
 button{
-margin-top: 50px;
+margin-top: 20px;
 width: 100%;
 background-color: #ffffff;
 color: #080710;
@@ -120,4 +120,20 @@ margin-left: 25px;
 }
 .social i{
 margin-right: 4px;
+}
+.otp-label{
+  float: left;
+}
+.otp-check{
+  height: 16px;
+  position: relative;
+  left: 152px;
+  bottom: 25px;
+  cursor: pointer;
+}
+.hide{
+  display: none;
+}
+.show{
+  display: block;
 }

@@ -2,13 +2,15 @@ import "../../src/style.css";
 import { useState } from "react";
 
 const Login = () => {
-  const user = {
-    username: "errabi",
-    password: "admin",
-  };
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const [isOtpChecked, setisOtpChecked] = useState(false);
 
+  const handleToggle = () => {
+    setisOtpChecked(!isOtpChecked);
+  };
+  console.log(isOtpChecked);
   return (
     <div>
       <div className="background">
@@ -30,10 +32,33 @@ const Login = () => {
         <label htmlFor="password">Password</label>
         <input
           type="password"
-          placeholder={password}
+          placeholder="password"
           id="password"
           onChange={(e) => setPassword(e.target.value)}
         />
+
+        <div className="otp">
+          <label className="otp-label" htmlFor="otp">
+           Login with OTP
+          </label>
+          <input
+            className="otp-check"
+            onChange={handleToggle}
+            type="checkbox"
+            id="otp"
+            name="opt"
+            value={otp}
+          />
+
+          <input
+            className={`${isOtpChecked ? "show" : "hide"}`}
+            type="password"
+            placeholder="One time password"
+            id="otp-code"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+          />
+        </div>
 
         <button>Log In</button>
       </form>
