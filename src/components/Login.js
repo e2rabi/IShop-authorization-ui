@@ -1,5 +1,5 @@
 import "../../src/style.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -7,10 +7,30 @@ const Login = () => {
   const [otp, setOtp] = useState("");
   const [isOtpChecked, setisOtpChecked] = useState(false);
 
-  const handleToggle = () => {
+  useEffect(() => {
+    console.log("after rendring call");
+  }, []);
+
+  function validateJwt(data) {
+    console.log(data.jwt);
+  }
+
+  async function login(e) {
+    e.preventDefault();
+    alert(`Username : ${username} and password : ${password}`);
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userName: username, password: password }),
+    };
+    await fetch(`http://localhost:8080/api/v1/public/login`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => validateJwt(data));
+  }
+  const checkOptButton = () => {
     setisOtpChecked(!isOtpChecked);
   };
-  console.log(isOtpChecked);
+
   return (
     <div>
       <div className="background">
@@ -19,7 +39,6 @@ const Login = () => {
       </div>
       <form>
         <h3>IShop Authentication</h3>
-        <h4>{username}</h4>
         <label htmlFor="username">Username</label>
         <input
           type="text"
@@ -39,11 +58,11 @@ const Login = () => {
 
         <div className="otp">
           <label className="otp-label" htmlFor="otp">
-           Login with OTP
+            Login with OTP
           </label>
           <input
             className="otp-check"
-            onChange={handleToggle}
+            onChange={checkOptButton}
             type="checkbox"
             id="otp"
             name="opt"
@@ -60,7 +79,7 @@ const Login = () => {
           />
         </div>
 
-        <button>Log In</button>
+        <button onClick={(e) => login(e)}>Log In</button>
       </form>
     </div>
   );
