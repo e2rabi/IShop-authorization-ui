@@ -6,6 +6,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [isOtpChecked, setisOtpChecked] = useState(false);
+  const [jwt, setJwt] = useState("");
 
   useEffect(() => {
     console.log("after rendring call");
@@ -13,10 +14,12 @@ const Login = () => {
 
   function validateJwt(data) {
     console.log(data.jwt);
+    if (data != undefined && data != null) {
+      setJwt(data.jwt);
+    }
   }
 
-  async function login(e) {
-    e.preventDefault();
+  async function login() {
     alert(`Username : ${username} and password : ${password}`);
     const requestOptions = {
       method: "POST",
@@ -25,7 +28,10 @@ const Login = () => {
     };
     await fetch(`http://localhost:8080/api/v1/public/login`, requestOptions)
       .then((response) => response.json())
-      .then((data) => validateJwt(data));
+      .then((data) => validateJwt(data))
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
   }
   const checkOptButton = () => {
     setisOtpChecked(!isOtpChecked);
@@ -37,7 +43,12 @@ const Login = () => {
         <div className="shape"></div>
         <div className="shape"></div>
       </div>
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          login();
+        }}
+      >
         <h3>IShop Authentication</h3>
         <label htmlFor="username">Username</label>
         <input
@@ -79,7 +90,7 @@ const Login = () => {
           />
         </div>
 
-        <button onClick={(e) => login(e)}>Log In</button>
+        <button type="submit">Log In</button>
       </form>
     </div>
   );

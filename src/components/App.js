@@ -1,10 +1,13 @@
 import Login from "./Login";
+import { StrictMode } from "react";
 
 const App = () => {
   return (
-    <div>
-      <Login name="Errabi Amine" />
-    </div>
+    <StrictMode>
+      <div>
+        <Login name="Errabi Amine" />
+      </div>
+    </StrictMode>
   );
 };
 
