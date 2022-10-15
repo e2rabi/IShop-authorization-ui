@@ -5,24 +5,10 @@
 padding: 0;
 margin: 0;
 box-sizing: border-box;
-color: white;
+color: rgb(62, 61, 61);
 }
 body{
-background-color: #080710;
-}
-.background{
-width: 430px;
-height: 520px;
-position: absolute;
-transform: translate(-50%,-50%);
-left: 50%;
-top: 50%;
-}
-.background .shape{
-height: 200px;
-width: 200px;
-position: absolute;
-border-radius: 50%;
+background: #080710 !important;
 }
 .shape:first-child{
 background: linear-gradient(
@@ -42,9 +28,9 @@ right: -30px;
 bottom: -80px;
 }
 form{
-height: 520px;
+height: 460px;
 width: 400px;
-background-color: rgba(255,255,255,0.13);
+background-color: #1a1d21;
 position: absolute;
 transform: translate(-50%,-50%);
 top: 50%;
@@ -57,37 +43,30 @@ padding: 50px 35px;
 }
 form *{
 font-family: 'Poppins',sans-serif;
-color: #ffffff;
+color: #d4d4d4;
 letter-spacing: 0.5px;
 outline: none;
-border: none;
+border-radius: 4px;
 }
 form h3{
 font-size: 32px;
 font-weight: 500;
 line-height: 42px;
 text-align: center;
+color: #fcfcfc;
+background: transparent;
 }
 
 label{
 display: block;
-margin-top: 30px;
+margin-top: 10px;
 font-size: 16px;
 font-weight: 500;
+background: transparent;
 }
-input{
-display: block;
-height: 50px;
-width: 100%;
-background-color: rgba(255,255,255,0.07);
-border-radius: 3px;
-padding: 0 10px;
-margin-top: 8px;
-font-size: 14px;
-font-weight: 300;
-}
+
 ::placeholder{
-color: #e5e5e5;
+color: #6f6d6d;
 }
 button{
 margin-top: 20px;
@@ -122,8 +101,12 @@ margin-left: 25px;
 .social i{
 margin-right: 4px;
 }
+.otp{
+  background: transparent;
+}
 .otp-label{
-  float: left;
+  position: relative;
+  bottom: 10px;
 }
 .otp-check{
   height: 16px;
@@ -137,4 +120,11 @@ margin-right: 4px;
 }
 .show{
   display: block;
+}
+.form-check-input{
+  position: relative;
+    top: 11px;
+}
+.text-muted {
+  color: #ff2c3f !important;
 }

@@ -1,6 +1,10 @@
-import "../../src/style.css";
 import { useState, useEffect, useDebugValue } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -34,7 +38,7 @@ const Login = () => {
       .then((data) => validateJwt(data))
       .catch((error) => {
         console.log(JSON.stringify(error));
-        navigate('/home');
+        navigate("/home");
       });
   }
   const checkOptButton = () => {
@@ -43,60 +47,51 @@ const Login = () => {
   useDebugValue("Hi from the code");
 
   return (
-    <div>
-      <div className="background">
-        <div className="shape"></div>
-        <div className="shape"></div>
-      </div>
-      <form
+    <div className="login">
+      <Form
         onSubmit={(e) => {
           e.preventDefault();
           login();
         }}
       >
         <h3>IShop Authentication</h3>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          value={username}
-          placeholder="Username"
-          id="username"
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <Form.Group className="mb-2" controlId="formBasicEmail">
+          <Form.Label>Username</Form.Label>
+          <InputGroup>
+            <InputGroup.Text>
+              <FontAwesomeIcon icon={faUser} />
+            </InputGroup.Text>
+            <Form.Control
+              type="text"
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter Username"
+            />
+          </InputGroup>
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          placeholder="password"
-          id="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <div className="otp">
-          <label className="otp-label" htmlFor="otp">
-            Login with OTP
-          </label>
-          <input
-            className="otp-check"
-            onChange={checkOptButton}
-            type="checkbox"
-            id="otp"
-            name="opt"
-            value={otp}
-          />
-
-          <input
-            className={`${isOtpChecked ? "show" : "hide"}`}
-            type="password"
-            placeholder="One time password"
-            id="otp-code"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-          />
-        </div>
-
-        <button type="submit">Log In</button>
-      </form>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <InputGroup>
+            <InputGroup.Text>
+              <FontAwesomeIcon icon={faLock} />
+            </InputGroup.Text>
+            <Form.Control
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder="Password"
+            />
+          </InputGroup>
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Log In
+        </Button>
+      </Form>
     </div>
   );
 };
