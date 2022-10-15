@@ -1,6 +1,8 @@
 import "../../src/style.css";
 import { useState, useEffect, useDebugValue } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -34,7 +36,7 @@ const Login = () => {
       .then((data) => validateJwt(data))
       .catch((error) => {
         console.log(JSON.stringify(error));
-        navigate('/home');
+        navigate("/home");
       });
   }
   const checkOptButton = () => {
@@ -43,60 +45,46 @@ const Login = () => {
   useDebugValue("Hi from the code");
 
   return (
-    <div>
-      <div className="background">
-        <div className="shape"></div>
-        <div className="shape"></div>
-      </div>
-      <form
+    <div className="login">
+      <Form
         onSubmit={(e) => {
           e.preventDefault();
           login();
         }}
       >
         <h3>IShop Authentication</h3>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          value={username}
-          placeholder="Username"
-          id="username"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          placeholder="password"
-          id="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <div className="otp">
-          <label className="otp-label" htmlFor="otp">
-            Login with OTP
-          </label>
-          <input
-            className="otp-check"
-            onChange={checkOptButton}
-            type="checkbox"
-            id="otp"
-            name="opt"
-            value={otp}
+        <Form.Group className="mb-2" controlId="formBasicEmail">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            size="sm"
+            type="text"
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter Username"
           />
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
 
-          <input
-            className={`${isOtpChecked ? "show" : "hide"}`}
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            size="sm"
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
-            placeholder="One time password"
-            id="otp-code"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
+            placeholder="Password"
           />
-        </div>
-
-        <button type="submit">Log In</button>
-      </form>
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+          <Form.Check type="checkbox" label="OTP Verification" className="" />
+        </Form.Group>
+        <Button variant="success" type="submit">
+          Log In
+        </Button>
+      </Form>
     </div>
   );
 };
