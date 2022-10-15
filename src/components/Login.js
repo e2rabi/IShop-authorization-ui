@@ -1,5 +1,6 @@
 import "../../src/style.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useDebugValue } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -7,6 +8,8 @@ const Login = () => {
   const [otp, setOtp] = useState("");
   const [isOtpChecked, setisOtpChecked] = useState(false);
   const [jwt, setJwt] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("after rendring call");
@@ -31,11 +34,13 @@ const Login = () => {
       .then((data) => validateJwt(data))
       .catch((error) => {
         console.log(JSON.stringify(error));
+        navigate('/home');
       });
   }
   const checkOptButton = () => {
     setisOtpChecked(!isOtpChecked);
   };
+  useDebugValue("Hi from the code");
 
   return (
     <div>
