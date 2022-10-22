@@ -32,9 +32,12 @@
     "process": "^0.11.10"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
+=======
+>>>>>>> 99fca2750d014c2196f9b18a7d3aa8e1dadff07c
     "bootstrap": "^5.2.2",
     "react": "^17.0.2",
     "react-bootstrap": "^2.5.0",
