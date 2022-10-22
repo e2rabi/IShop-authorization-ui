@@ -128,3 +128,19 @@ margin-right: 4px;
 .text-muted {
   color: #ff2c3f !important;
 }
+.btn-create-user{
+  float: right;
+  width: 200px;
+  position: relative;
+  bottom: 10px;
+  color: white;
+}
+.current-user{
+  float: left;
+  margin-left: 26px;
+  position: relative;
+  top: 3px;
+}
+.ishop-brand{
+  font-weight: bold;
+}

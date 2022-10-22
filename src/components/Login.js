@@ -1,33 +1,48 @@
-import { useState, useEffect, useDebugValue } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
+import UserContext from "./UserContext";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [otp, setOtp] = useState("");
-  const [isOtpChecked, setisOtpChecked] = useState(false);
-  const [jwt, setJwt] = useState("");
-
+  const [user, setUser] = useContext(UserContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.log("after rendring call");
-  }, []);
-
   function validateJwt(data) {
-    console.log(data.jwt);
     if (data != undefined && data != null) {
-      setJwt(data.jwt);
+      let decodedJwt = parseJwt(data.jwt);
+      let userName = "";
+      if (decodedJwt != undefined && decodedJwt != "" && decodedJwt != null) {
+        userName = decodedJwt.userName;
+      }
+      setUser(userName);
+      navigate("/home");
     }
   }
 
+  function parseJwt(token) {
+    if (token != undefined && token != null) {
+      sessionStorage.setItem("jwt", token);
+      var base64Url = token.split(".")[1];
+      var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      var jsonPayload = decodeURIComponent(
+        window
+          .atob(base64)
+          .split("")
+          .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join("")
+      );
+    }
+    return JSON.parse(jsonPayload);
+  }
   async function login() {
-    alert(`Username : ${username} and password : ${password}`);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -38,13 +53,10 @@ const Login = () => {
       .then((data) => validateJwt(data))
       .catch((error) => {
         console.log(JSON.stringify(error));
-        navigate("/home");
+        setUser("");
+        alert("Invalid user");
       });
   }
-  const checkOptButton = () => {
-    setisOtpChecked(!isOtpChecked);
-  };
-  useDebugValue("Hi from the code");
 
   return (
     <div className="login">

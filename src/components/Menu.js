@@ -1,12 +1,17 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
+import { Badge, Button } from "react-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { useContext } from "react";
+import UserContext from "./UserContext";
+
 const Menu = () => {
+  const [currentUser] = useContext(UserContext);
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">ISHOP Authorization</Navbar.Brand>
+        <Navbar.Brand href="#home" className="ishop-brand">ISHOP Authorization</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -25,6 +30,14 @@ const Menu = () => {
             <Nav.Link href="#link">Configuration</Nav.Link>
           </Nav>
         </Navbar.Collapse>
+        <div className="btn-create-user">
+          <Button variant="primary" size="sm">
+            Create new user
+          </Button>
+        </div>
+        <div>
+          <h6 className="current-user">{currentUser}</h6>
+        </div>
       </Container>
     </Navbar>
   );
