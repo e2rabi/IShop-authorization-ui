@@ -23,18 +23,22 @@ const Login = () => {
   function validateJwt(data) {
     if (data != undefined && data != null) {
       let decodedJwt = parseJwt(data.jwt);
-      let userName = "";
       if (decodedJwt != undefined && decodedJwt != "" && decodedJwt != null) {
-        userName = decodedJwt.userName;
+        setUser(decodedJwt.userName);
         if(data.useGoogle2f!= undefined && data.useGoogle2f!= null &&  data.useGoogle2f=="true"){
           handleOtpShow();
+            // check otp validty and redirect otherwise invalid login
         }
       }
-      setUser(userName);
+    
       //navigate("/home");
     }
   }
-
+  function invalidateLogin(){
+    setUser(null);
+    sessionStorage.setItem("jwt", null);
+    handleErrorShow();
+  }
   function parseJwt(token) {
     if (token != undefined && token != null) {
       sessionStorage.setItem("jwt", token);
@@ -62,9 +66,9 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => validateJwt(data))
       .catch((error) => {
-        console.log(JSON.stringify(error));
-        setUser("");
-        handleErrorShow();
+        alert(JSON.stringify(error))
+        console.log("Login failed : " +`${JSON.stringify(error)}`);
+        invalidateLogin();
       });
   }
 
@@ -138,8 +142,8 @@ const Login = () => {
               placeholder="Enter Username"
             />
           </InputGroup>
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
+          <Form.Text className="text-muted"  style={{ visibility: !username ? 'visible': 'hidden'}}>
+           Username required.
           </Form.Text>
         </Form.Group>
 
@@ -155,11 +159,11 @@ const Login = () => {
               placeholder="Password"
             />
           </InputGroup>
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
+          <Form.Text className="text-muted" style={{ visibility: !password ? 'visible': 'hidden'}}>
+           Password required.
           </Form.Text>
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button disabled={!password || !username}  variant="primary" type="submit">
           Log In
         </Button>
       </Form>
