@@ -144,3 +144,12 @@ margin-right: 4px;
 .ishop-brand{
   font-weight: bold;
 }
+.otp-input-wrapper{
+  text-align: center;
+}
+.otp-input{
+  width: 45px;
+  margin-right: 10px;
+  text-align: center;
+  font-weight: bold;
+}
