@@ -20,21 +20,34 @@ const Login = () => {
   const handleOtpClose = () => setOtp(false);
   const handleOtpShow = () => setOtp(true);
 
+  const [otp1,setOtp1] = useState("0");
+  const [otp2,setOtp2] = useState("0");
+  const [otp3,setOtp3] = useState("0");
+  const [otp4,setOtp4] = useState("0");
+  const [otp5,setOtp5] = useState("0");
+  const [otp6,setOtp6] = useState("0");  
+
+
   function validateJwt(data) {
     if (data != undefined && data != null) {
       let decodedJwt = parseJwt(data.jwt);
       if (decodedJwt != undefined && decodedJwt != "" && decodedJwt != null) {
         setUser(decodedJwt.userName);
-        if(data.useGoogle2f!= undefined && data.useGoogle2f!= null &&  data.useGoogle2f=="true"){
+        if (
+          data.useGoogle2f != undefined &&
+          data.useGoogle2f != null &&
+          data.useGoogle2f == "true"
+        ) {
           handleOtpShow();
-            // check otp validty and redirect otherwise invalid login
+          // check otp validty and redirect otherwise invalid login
         }
       }
-    
+
       //navigate("/home");
     }
   }
-  function invalidateLogin(){
+  function handleError(error) {
+    console.log("Login failed : " + `${JSON.stringify(error)}`);
     setUser(null);
     sessionStorage.setItem("jwt", null);
     handleErrorShow();
@@ -66,9 +79,7 @@ const Login = () => {
       .then((response) => response.json())
       .then((data) => validateJwt(data))
       .catch((error) => {
-        alert(JSON.stringify(error))
-        console.log("Login failed : " +`${JSON.stringify(error)}`);
-        invalidateLogin();
+        handleError(error);
       });
   }
 
@@ -86,19 +97,80 @@ const Login = () => {
           <Modal.Title>Verification code</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-           <p>Please enter the one time password to verify your account.</p>
-           <div className="otp-input-wrapper">
-           <input className="otp-input"></input>
-           <input className="otp-input"></input>
-           <input className="otp-input"></input>
-           <input className="otp-input"></input>
-           <input className="otp-input"></input>
-           <input className="otp-input"></input>
-           </div>
-          
+          <p>Please enter the one time password to verify your account : </p>
+            <Form.Group className="mb-3" controlId="otpForm">
+              <InputGroup className="otp-input-wrapper">
+                <Form.Control
+                  className="otp-input"
+                  type="text"
+                  onKeyPress={(event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                    }
+                }}
+                  onChange={(e) => setOtp1(e.target.value)}
+                  onBlur={(e) => setOtp1(e.target.value)}
+                />
+                <Form.Control
+                  className="otp-input"
+                  type="text"
+                  onKeyPress={(event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                    }
+                }}
+                  onChange={(e) => setOtp2(e.target.value)}
+                  onBlur={(e) => setOtp2(e.target.value)}
+                />
+                <Form.Control
+                  className="otp-input"
+                  type="text"
+                  onKeyPress={(event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                    }
+                }}
+                  onChange={(e) => setOtp3(e.target.value)}
+                  onBlur={(e) => setOtp3(e.target.value)}
+                />
+                <Form.Control
+                  className="otp-input"
+                  type="text"
+                  onKeyPress={(event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                    }
+                }}
+                  onChange={(e) => setOtp4(e.target.value)}
+                  onBlur={(e) => setOtp4(e.target.value)}
+                />
+                <Form.Control
+                  className="otp-input"
+                  type="text"
+                  onKeyPress={(event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                    }
+                }}
+                  onChange={(e) => setOtp5(e.target.value)}
+                  onBlur={(e) => setOtp5(e.target.value)}
+                />
+                <Form.Control
+                  className="otp-input"
+                  type="text"
+                  onKeyPress={(event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                        event.preventDefault();
+                    }
+                }}
+                  onChange={(e) => setOtp6(e.target.value)}
+                  onBlur={(e) => setOtp6(e.target.value)}
+                />
+              </InputGroup>
+            </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleOtpClose}>
+          <Button variant="danger" type="button">
             Validate
           </Button>
         </Modal.Footer>
@@ -139,11 +211,15 @@ const Login = () => {
             <Form.Control
               type="text"
               onChange={(e) => setUsername(e.target.value)}
+              onBlur={(e) => setUsername(e.target.value)}
               placeholder="Enter Username"
             />
           </InputGroup>
-          <Form.Text className="text-muted"  style={{ visibility: !username ? 'visible': 'hidden'}}>
-           Username required.
+          <Form.Text
+            className="text-muted"
+            style={{ visibility: !username ? "visible" : "hidden" }}
+          >
+            Username required.
           </Form.Text>
         </Form.Group>
 
@@ -159,11 +235,18 @@ const Login = () => {
               placeholder="Password"
             />
           </InputGroup>
-          <Form.Text className="text-muted" style={{ visibility: !password ? 'visible': 'hidden'}}>
-           Password required.
+          <Form.Text
+            className="text-muted"
+            style={{ visibility: !password ? "visible" : "hidden" }}
+          >
+            Password required.
           </Form.Text>
         </Form.Group>
-        <Button disabled={!password || !username}  variant="primary" type="submit">
+        <Button
+          disabled={!password || !username}
+          variant="primary"
+          type="submit"
+        >
           Log In
         </Button>
       </Form>
