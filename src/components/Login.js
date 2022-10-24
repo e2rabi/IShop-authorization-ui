@@ -20,13 +20,12 @@ const Login = () => {
   const handleOtpClose = () => setOtp(false);
   const handleOtpShow = () => setOtp(true);
 
-  const [otp1,setOtp1] = useState("0");
-  const [otp2,setOtp2] = useState("0");
-  const [otp3,setOtp3] = useState("0");
-  const [otp4,setOtp4] = useState("0");
-  const [otp5,setOtp5] = useState("0");
-  const [otp6,setOtp6] = useState("0");  
-
+  const [otp1, setOtp1] = useState("0");
+  const [otp2, setOtp2] = useState("0");
+  const [otp3, setOtp3] = useState("0");
+  const [otp4, setOtp4] = useState("0");
+  const [otp5, setOtp5] = useState("0");
+  const [otp6, setOtp6] = useState("0");
 
   function validateJwt(data) {
     if (data != undefined && data != null) {
@@ -39,11 +38,11 @@ const Login = () => {
           data.useGoogle2f == "true"
         ) {
           handleOtpShow();
-          // check otp validty and redirect otherwise invalid login
+        }else{
+          navigate("/home");
         }
       }
-
-      //navigate("/home");
+   
     }
   }
   function handleError(error) {
@@ -82,7 +81,28 @@ const Login = () => {
         handleError(error);
       });
   }
-
+  async function verifyOtp() {
+    let otp = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userName: username,
+        password: password,
+        otpCode: otp,
+      }),
+    };
+    await fetch(`http://localhost:8080/api/v1/public/verifyOtp`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data == true) {
+          navigate("/home");
+        }
+      })
+      .catch((error) => {
+        handleError(error);
+      });
+  }
   return (
     <div className="login">
       <Modal
@@ -98,79 +118,79 @@ const Login = () => {
         </Modal.Header>
         <Modal.Body>
           <p>Please enter the one time password to verify your account : </p>
-            <Form.Group className="mb-3" controlId="otpForm">
-              <InputGroup className="otp-input-wrapper">
-                <Form.Control
-                  className="otp-input"
-                  type="text"
-                  onKeyPress={(event) => {
-                    if (!/[0-9]/.test(event.key)) {
-                        event.preventDefault();
-                    }
+          <Form.Group className="mb-3" controlId="otpForm">
+            <InputGroup className="otp-input-wrapper">
+              <Form.Control
+                className="otp-input"
+                type="text"
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
                 }}
-                  onChange={(e) => setOtp1(e.target.value)}
-                  onBlur={(e) => setOtp1(e.target.value)}
-                />
-                <Form.Control
-                  className="otp-input"
-                  type="text"
-                  onKeyPress={(event) => {
-                    if (!/[0-9]/.test(event.key)) {
-                        event.preventDefault();
-                    }
+                onChange={(e) => setOtp1(e.target.value)}
+                onBlur={(e) => setOtp1(e.target.value)}
+              />
+              <Form.Control
+                className="otp-input"
+                type="text"
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
                 }}
-                  onChange={(e) => setOtp2(e.target.value)}
-                  onBlur={(e) => setOtp2(e.target.value)}
-                />
-                <Form.Control
-                  className="otp-input"
-                  type="text"
-                  onKeyPress={(event) => {
-                    if (!/[0-9]/.test(event.key)) {
-                        event.preventDefault();
-                    }
+                onChange={(e) => setOtp2(e.target.value)}
+                onBlur={(e) => setOtp2(e.target.value)}
+              />
+              <Form.Control
+                className="otp-input"
+                type="text"
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
                 }}
-                  onChange={(e) => setOtp3(e.target.value)}
-                  onBlur={(e) => setOtp3(e.target.value)}
-                />
-                <Form.Control
-                  className="otp-input"
-                  type="text"
-                  onKeyPress={(event) => {
-                    if (!/[0-9]/.test(event.key)) {
-                        event.preventDefault();
-                    }
+                onChange={(e) => setOtp3(e.target.value)}
+                onBlur={(e) => setOtp3(e.target.value)}
+              />
+              <Form.Control
+                className="otp-input"
+                type="text"
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
                 }}
-                  onChange={(e) => setOtp4(e.target.value)}
-                  onBlur={(e) => setOtp4(e.target.value)}
-                />
-                <Form.Control
-                  className="otp-input"
-                  type="text"
-                  onKeyPress={(event) => {
-                    if (!/[0-9]/.test(event.key)) {
-                        event.preventDefault();
-                    }
+                onChange={(e) => setOtp4(e.target.value)}
+                onBlur={(e) => setOtp4(e.target.value)}
+              />
+              <Form.Control
+                className="otp-input"
+                type="text"
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
                 }}
-                  onChange={(e) => setOtp5(e.target.value)}
-                  onBlur={(e) => setOtp5(e.target.value)}
-                />
-                <Form.Control
-                  className="otp-input"
-                  type="text"
-                  onKeyPress={(event) => {
-                    if (!/[0-9]/.test(event.key)) {
-                        event.preventDefault();
-                    }
+                onChange={(e) => setOtp5(e.target.value)}
+                onBlur={(e) => setOtp5(e.target.value)}
+              />
+              <Form.Control
+                className="otp-input"
+                type="text"
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
                 }}
-                  onChange={(e) => setOtp6(e.target.value)}
-                  onBlur={(e) => setOtp6(e.target.value)}
-                />
-              </InputGroup>
-            </Form.Group>
+                onChange={(e) => setOtp6(e.target.value)}
+                onBlur={(e) => setOtp6(e.target.value)}
+              />
+            </InputGroup>
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" type="button">
+          <Button variant="danger" type="button" onClick={() => verifyOtp()}>
             Validate
           </Button>
         </Modal.Footer>
