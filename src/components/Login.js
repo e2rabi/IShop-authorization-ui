@@ -14,30 +14,20 @@ const Login = () => {
   const [user, setUser] = useContext(UserContext);
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
-  const [otp, setOtp] = useState(false);
+
   const handleErrorClose = () => setShow(false);
   const handleErrorShow = () => setShow(true);
-  const handleOtpClose = () => setOtp(false);
-  const handleOtpShow = () => setOtp(true);
 
-  const [otp1, setOtp1] = useState("0");
-  const [otp2, setOtp2] = useState("0");
-  const [otp3, setOtp3] = useState("0");
-  const [otp4, setOtp4] = useState("0");
-  const [otp5, setOtp5] = useState("0");
-  const [otp6, setOtp6] = useState("0");
 
   function validateJwt(data) {
     if (data != undefined && data != null) {
       let decodedJwt = parseJwt(data.jwt);
       if (decodedJwt != undefined && decodedJwt != "" && decodedJwt != null) {
         setUser(decodedJwt.userName);
-        if (
-          data.useGoogle2f != undefined &&
-          data.useGoogle2f != null &&
-          data.useGoogle2f == "true"
-        ) {
-          handleOtpShow();
+        if ( data.useGoogle2f != undefined &&  data.useGoogle2f != null &&  data.useGoogle2f == "true"){
+          // add otp check
+          console.log("chek otp...")
+          navigate("/home");
         }else{
           navigate("/home");
         }
@@ -52,11 +42,12 @@ const Login = () => {
     handleErrorShow();
   }
   function parseJwt(token) {
+    let jsonPayload = "";
     if (token != undefined && token != null) {
       sessionStorage.setItem("jwt", token);
-      var base64Url = token.split(".")[1];
-      var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-      var jsonPayload = decodeURIComponent(
+      let base64Url = token.split(".")[1];
+      let base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+      jsonPayload = decodeURIComponent(
         window
           .atob(base64)
           .split("")
@@ -68,6 +59,7 @@ const Login = () => {
     }
     return JSON.parse(jsonPayload);
   }
+
   async function login() {
     const requestOptions = {
       method: "POST",
@@ -81,11 +73,10 @@ const Login = () => {
         handleError(error);
       });
   }
-  async function verifyOtp() {
-    let otp = otp1 + otp2 + otp3 + otp4 + otp5 + otp6;
+  async function verifyOtp(otp) {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer '+sessionStorage.getItem("jwt")},
       body: JSON.stringify({
         userName: username,
         password: password,
@@ -95,7 +86,7 @@ const Login = () => {
     await fetch(`http://localhost:8080/api/v1/public/verifyOtp`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        if (data == true) {
+        if (data == 'true') {
           navigate("/home");
         }
       })
@@ -105,96 +96,6 @@ const Login = () => {
   }
   return (
     <div className="login">
-      <Modal
-        show={otp}
-        onHide={handleOtpClose}
-        backdrop="static"
-        keyboard={false}
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Verification code</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>Please enter the one time password to verify your account : </p>
-          <Form.Group className="mb-3" controlId="otpForm">
-            <InputGroup className="otp-input-wrapper">
-              <Form.Control
-                className="otp-input"
-                type="text"
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                onChange={(e) => setOtp1(e.target.value)}
-                onBlur={(e) => setOtp1(e.target.value)}
-              />
-              <Form.Control
-                className="otp-input"
-                type="text"
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                onChange={(e) => setOtp2(e.target.value)}
-                onBlur={(e) => setOtp2(e.target.value)}
-              />
-              <Form.Control
-                className="otp-input"
-                type="text"
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                onChange={(e) => setOtp3(e.target.value)}
-                onBlur={(e) => setOtp3(e.target.value)}
-              />
-              <Form.Control
-                className="otp-input"
-                type="text"
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                onChange={(e) => setOtp4(e.target.value)}
-                onBlur={(e) => setOtp4(e.target.value)}
-              />
-              <Form.Control
-                className="otp-input"
-                type="text"
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                onChange={(e) => setOtp5(e.target.value)}
-                onBlur={(e) => setOtp5(e.target.value)}
-              />
-              <Form.Control
-                className="otp-input"
-                type="text"
-                onKeyPress={(event) => {
-                  if (!/[0-9]/.test(event.key)) {
-                    event.preventDefault();
-                  }
-                }}
-                onChange={(e) => setOtp6(e.target.value)}
-                onBlur={(e) => setOtp6(e.target.value)}
-              />
-            </InputGroup>
-          </Form.Group>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" type="button" onClick={() => verifyOtp()}>
-            Validate
-          </Button>
-        </Modal.Footer>
-      </Modal>
       <Modal
         show={show}
         onHide={handleErrorClose}
