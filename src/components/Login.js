@@ -18,21 +18,23 @@ const Login = () => {
   const handleErrorClose = () => setShow(false);
   const handleErrorShow = () => setShow(true);
 
-
   function validateJwt(data) {
     if (data != undefined && data != null) {
       let decodedJwt = parseJwt(data.jwt);
       if (decodedJwt != undefined && decodedJwt != "" && decodedJwt != null) {
         setUser(decodedJwt.userName);
-        if ( data.useGoogle2f != undefined &&  data.useGoogle2f != null &&  data.useGoogle2f == "true"){
+        if (
+          data.useGoogle2f != undefined &&
+          data.useGoogle2f != null &&
+          data.useGoogle2f == "true"
+        ) {
           // add otp check
-          console.log("chek otp...")
+          console.log("chek otp...");
           navigate("/home");
-        }else{
+        } else {
           navigate("/home");
         }
       }
-   
     }
   }
   function handleError(error) {
@@ -76,7 +78,10 @@ const Login = () => {
   async function verifyOtp(otp) {
     const requestOptions = {
       method: "POST",
-      headers: { "Content-Type": "application/json", 'Authorization': 'Bearer '+sessionStorage.getItem("jwt")},
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("jwt"),
+      },
       body: JSON.stringify({
         userName: username,
         password: password,
@@ -86,7 +91,7 @@ const Login = () => {
     await fetch(`http://localhost:8080/api/v1/public/verifyOtp`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        if (data == 'true') {
+        if (data == "true") {
           navigate("/home");
         }
       })

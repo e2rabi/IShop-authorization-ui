@@ -5,8 +5,14 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useContext } from "react";
 import UserContext from "./UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Menu = () => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/create-user");
+  };
   const [currentUser] = useContext(UserContext);
   return (
     <Navbar bg="light" expand="lg">
@@ -33,7 +39,7 @@ const Menu = () => {
           </Nav>
         </Navbar.Collapse>
         <div className="btn-create-user">
-          <Button variant="primary" size="sm">
+          <Button onClick={handleClick} variant="primary" size="sm">
             Create new user
           </Button>
         </div>

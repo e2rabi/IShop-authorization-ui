@@ -8,7 +8,7 @@ box-sizing: border-box;
 color: rgb(62, 61, 61);
 }
 body{
-background: #080710 !important;
+background: #e5e5e5 !important;
 }
 .shape:first-child{
 background: linear-gradient(
@@ -30,7 +30,7 @@ bottom: -80px;
 form{
 height: 460px;
 width: 400px;
-background-color: #1a1d21;
+background-color: #ffffff;
 position: absolute;
 transform: translate(-50%,-50%);
 top: 50%;
@@ -43,7 +43,7 @@ padding: 50px 35px;
 }
 form *{
 font-family: 'Poppins',sans-serif;
-color: #d4d4d4;
+color: #000000;
 letter-spacing: 0.5px;
 outline: none;
 border-radius: 4px;
@@ -53,7 +53,7 @@ font-size: 32px;
 font-weight: 500;
 line-height: 42px;
 text-align: center;
-color: #fcfcfc;
+color: #060606;
 background: transparent;
 }
 
@@ -152,4 +152,55 @@ margin-right: 4px;
   margin-right: 10px;
   text-align: center;
   font-weight: bold;
+}
+.form-label {
+  color: rgb(0, 0, 0);
+}
+.user-form{
+  width: 70%;
+position: relative;
+margin-top: 5px;
+height: fit-content;
+padding-bottom: 20px;
+padding-top: 20px;
+}
+.form-input{
+  width: 400px;
+}
+.form-btn-manage-role{
+  bottom: 24px;
+    position: relative;
+    float: right;
+    left: 117px;
+    color: #1111b6;
+}
+.form-check-label{
+  position: relative;
+    top: 11px;
+    font-size: 14px;
+    color: #1111b6;
+    margin-top: 0px !important;
+}
+.form-checker{
+  position: relative;
+  bottom: 20px;
+}
+.breadcrumb-text a{
+  color: rgb(72, 0, 255) !important;
+}
+.form-col{
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.form-row{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.breadcrumb-menu{
+  position: relative;
+  left: 240px;
+}
+.breadcrumb{
+  position: relative;
+  top:10px;
 }
