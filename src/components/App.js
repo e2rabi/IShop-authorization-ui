@@ -2,10 +2,12 @@ import Login from "./Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { StrictMode, useState } from "react";
 import Home from "./Home";
-import CreateUser from "./CreateUser";
+import User from "./User";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../../src/style.css";
 import UserContext from "./UserContext";
+import Role from "./Role";
+import Authority from "./Authority";
 
 const App = () => {
   const currentUser = useState("");
@@ -15,7 +17,9 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/home" element={<Home />}></Route>
-            <Route path="/create-user" element={<CreateUser />}></Route>
+            <Route path="/create-user" element={<User />}></Route>
+            <Route path="/roles" element={<Role />}></Route>
+            <Route path="/authorities" element={<Authority />}></Route>
             <Route path="/" element={<Login />} />
           </Routes>
         </BrowserRouter>

@@ -4,8 +4,12 @@ import Form from "react-bootstrap/Form";
 import { Col } from "react-bootstrap";
 import { Container, Row } from "react-bootstrap";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
-
-const CreateUser = () => {
+import { useNavigate } from "react-router-dom";
+const User = () => {
+  const navigate = useNavigate();
+  const editRoles = () => {
+    navigate("/roles");
+  };
   return (
     <div>
       <header>
@@ -157,23 +161,20 @@ const CreateUser = () => {
                     className="form-btn-manage-role"
                     size="sm"
                     variant="link"
+                    onClick={()=>editRoles()}
                   >
-                    Manage roles
+                    Edit roles
                   </Button>
                 </Col>
               </Row>
               <Row>
+                <Col className="form-col"></Col>
                 <Col className="form-col">
-                 
-                </Col>
-                <Col className="form-col">
-                <Button variant="success" type="submit">
+                  <Button variant="success" type="submit">
                     Create user
                   </Button>
                 </Col>
-                <Col className="form-col">
-             
-                 </Col>
+                <Col className="form-col"></Col>
               </Row>
             </Form>
           </Col>
@@ -183,4 +184,4 @@ const CreateUser = () => {
   );
 };
 
-export default CreateUser;
+export default User;

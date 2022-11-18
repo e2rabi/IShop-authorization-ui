@@ -164,6 +164,24 @@ height: fit-content;
 padding-bottom: 20px;
 padding-top: 20px;
 }
+.role-form{
+  width: 41%;
+  height: 285px;
+  margin-top: 5px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  left: 36%;
+}
+.authority-form{
+  width: 41%;
+  height: 193px;
+  margin-top: 5px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  left: 36%;
+}
 .form-input{
   width: 400px;
 }
@@ -173,6 +191,12 @@ padding-top: 20px;
     float: right;
     left: 117px;
     color: #1111b6;
+}
+.form-btn-manage-permission{
+  bottom: 24px;
+  position: relative;
+  color: #1111b6;
+  left: 164px;
 }
 .form-check-label{
   position: relative;
@@ -203,4 +227,42 @@ padding-top: 20px;
 .breadcrumb{
   position: relative;
   top:10px;
+}
+.form-role-input{
+  width: 500px;
+}
+.btn-create-role{
+  width: 200px;
+  position: relative;
+  bottom: 108px;
+}
+.btn-create-authority{
+  width: 200px;
+  position: relative;
+  bottom: 58px;
+}
+.alert-permission{
+  padding: 8px;
+  font-size: 13px;
+  width: 41%;
+  position: relative;
+  bottom: 16px;
+  float: right;
+  right: 43px;
+}
+.edit-permission{
+  color: rgb(17, 17, 182);
+  position: relative;
+  bottom: 118px;
+  left: 164px;
+}
+.form-btn-edit-roles{
+  color: #1111b6;
+  position: relative;
+  bottom: 219px;
+  left: 65px;
+}
+.permission{
+  position: relative;
+  bottom: 54px;
 }
