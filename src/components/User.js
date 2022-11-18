@@ -161,7 +161,7 @@ const User = () => {
                     className="form-btn-manage-role"
                     size="sm"
                     variant="link"
-                    onClick={()=>editRoles()}
+                    onClick={() => editRoles()}
                   >
                     Edit roles
                   </Button>

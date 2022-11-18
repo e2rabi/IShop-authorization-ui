@@ -174,7 +174,7 @@ padding-top: 20px;
   left: 36%;
 }
 .authority-form{
-  width: 41%;
+  width: 38%;
   height: 193px;
   margin-top: 5px;
   padding-top: 20px;
@@ -244,17 +244,17 @@ padding-top: 20px;
 .alert-permission{
   padding: 8px;
   font-size: 13px;
-  width: 41%;
+  width: 49%;
   position: relative;
   bottom: 16px;
   float: right;
-  right: 43px;
+  right: 2px;
 }
 .edit-permission{
   color: rgb(17, 17, 182);
   position: relative;
   bottom: 118px;
-  left: 164px;
+  left: 198px;
 }
 .form-btn-edit-roles{
   color: #1111b6;
@@ -265,4 +265,17 @@ padding-top: 20px;
 .permission{
   position: relative;
   bottom: 54px;
+}
+.alert-dismissible .btn-close {
+  z-index: 2;
+  padding: 0;
+  position: absolute;
+  top: 0px;
+  top: -8px;
+  right: 5px;
+  font-size: 12px;
+}
+.authority-errors{
+  height: 30px;
+  margin: 0px;
 }
