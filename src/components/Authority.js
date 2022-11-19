@@ -1,7 +1,8 @@
 import Menu from "./Menu";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
+import Card from "react-bootstrap/Card";
+import Table from "react-bootstrap/Table";
 import IshopAlert from "./errors/IshopAlert";
 import { Col } from "react-bootstrap";
 import { Container, Row } from "react-bootstrap";
@@ -13,16 +14,16 @@ const Authority = () => {
   const [alert, setAlert] = useState(false);
   const [variant, setVariant] = useState("");
   const [message, setMessage] = useState("");
-  const [renderAlert,setRenderAlert] = useState(Date.now())
+  const [renderAlert, setRenderAlert] = useState(Date.now());
 
-  const displayAlert = (type,message) => {
-    if(type != null && type=="success"){
+  const displayAlert = (type, message) => {
+    if (type != null && type == "success") {
       setVariant("success");
-    }else{
+    } else {
       setVariant("danger");
     }
-    setAlert(true)
-    setRenderAlert(Date.now())
+    setAlert(true);
+    setRenderAlert(Date.now());
     setMessage(message);
   };
 
@@ -36,16 +37,16 @@ const Authority = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data != null && data.id != null) {
-          displayAlert("success","Permission created with success");
+          displayAlert("success", "Permission created with success");
         } else {
           if (data != null && data.code == "1006") {
-            displayAlert("warn","Permission already exist");
+            displayAlert("warn", "Permission already exist");
           }
         }
       })
       .catch((error) => {
         console.log(JSON.stringify(error));
-        displayAlert("error","Permission creating failed");
+        displayAlert("error", "Permission creating failed");
       });
   };
   return (
@@ -111,22 +112,72 @@ const Authority = () => {
                       variant="success"
                       type="button"
                     >
-                      Save
+                      Add
                     </Button>
                   </Form.Group>
                 </Col>
               </Row>
-              <Row>
+              <Row className="form-row">
                 <Col className="form-col">
-                  <Form.Group className="mb-4" controlId="formBasicPassword">
-                    <Button
-                      className="edit-permission"
-                      size="sm"
-                      variant="link"
-                    >
-                      Edit permissions
-                    </Button>
-                  </Form.Group>
+                  <Card className="permission-container">
+                    <Card.Body>
+                      <Card.Text>
+                        <Table striped bordered hover size="sm">
+                          <thead>
+                            <tr>
+                              <th>Permission Name</th>
+                              <th className="cell-edit-authority"></th>
+                              <th className="cell-edit-authority"></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Create</td>
+                              <td>
+                                <Button
+                                  className="btn-edit-authority"
+                                  variant="primary"
+                                  size="sm"
+                                >
+                                  Edit
+                                </Button>
+                              </td>
+                              <td>
+                                <Button
+                                  className="btn-edit-authority"
+                                  variant="danger"
+                                  size="sm"
+                                >
+                                  Delete
+                                </Button>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>Read</td>
+                              <td>
+                                <Button
+                                  className="btn-edit-authority"
+                                  variant="primary"
+                                  size="sm"
+                                >
+                                  Edit
+                                </Button>
+                              </td>
+                              <td>
+                                <Button
+                                  className="btn-edit-authority"
+                                  variant="danger"
+                                  size="sm"
+                                >
+                                  Delete
+                                </Button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </Table>
+                      </Card.Text>
+                    </Card.Body>
+                  </Card>
                 </Col>
               </Row>
             </Form>
