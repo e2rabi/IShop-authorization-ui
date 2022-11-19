@@ -2,6 +2,7 @@ import Menu from "./Menu";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Alert from "react-bootstrap/Alert";
+import IshopAlert from "./errors/IshopAlert";
 import { Col } from "react-bootstrap";
 import { Container, Row } from "react-bootstrap";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
@@ -9,9 +10,21 @@ import { useState } from "react";
 
 const Authority = () => {
   const [permission, setPermission] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const [exist, setExist] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [variant, setVariant] = useState("");
+  const [message, setMessage] = useState("");
+  const [renderAlert,setRenderAlert] = useState(Date.now())
+
+  const displayAlert = (type,message) => {
+    if(type != null && type=="success"){
+      setVariant("success");
+    }else{
+      setVariant("danger");
+    }
+    setAlert(true)
+    setRenderAlert(Date.now())
+    setMessage(message);
+  };
 
   const saveAuthority = async (permission) => {
     const requestOptions = {
@@ -23,22 +36,16 @@ const Authority = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data != null && data.id != null) {
-          setSuccess(true);
-          setFailed(false);
-          setExist(false);
+          displayAlert("success","Permission created with success");
         } else {
           if (data != null && data.code == "1006") {
-            setSuccess(false);
-            setFailed(false);
-            setExist(true);
+            displayAlert("warn","Permission already exist");
           }
         }
       })
       .catch((error) => {
         console.log(JSON.stringify(error));
-        setSuccess(false);
-        setFailed(true);
-        setExist(false);
+        displayAlert("error","Permission creating failed");
       });
   };
   return (
@@ -83,34 +90,13 @@ const Authority = () => {
               <Row>
                 <Col className="form-col">
                   <Form.Group className="mb-4" controlId="formBasicPassword">
-                    <div className="authority-errors"> {/* to be moved to a componenet for error display*/}
-                      <Alert
-                        style={{ display: success == true ? "block" : "none" }}
-                        className="alert-permission"
-                        variant="success"
-                        onClose={() => setSuccess(false)}
-                        dismissible
-                      >
-                        Permission created with success
-                      </Alert>
-                      <Alert
-                        style={{ display: failed == true ? "block" : "none" }}
-                        className="alert-permission"
-                        variant="danger"
-                        onClose={() => setFailed(false)}
-                        dismissible
-                      >
-                        Permission creating failed
-                      </Alert>
-                      <Alert
-                        style={{ display: exist == true ? "block" : "none" }}
-                        className="alert-permission"
-                        variant="danger"
-                        onClose={() => setExist(false)}
-                        dismissible
-                      >
-                        Permission already exist
-                      </Alert>
+                    <div className="authority-errors">
+                      <IshopAlert
+                        display={alert}
+                        variant={variant}
+                        message={message}
+                        render={renderAlert}
+                      ></IshopAlert>
                     </div>
                   </Form.Group>
                 </Col>
