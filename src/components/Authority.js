@@ -7,7 +7,7 @@ import IshopAlert from "./errors/IshopAlert";
 import { Col } from "react-bootstrap";
 import { Container, Row } from "react-bootstrap";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Authority = () => {
   const [permission, setPermission] = useState("");
@@ -15,7 +15,11 @@ const Authority = () => {
   const [variant, setVariant] = useState("");
   const [message, setMessage] = useState("");
   const [renderAlert, setRenderAlert] = useState(Date.now());
+  const [permissions, setPermissions] = useState([]);
 
+  useEffect(() => {
+    getPermissions();
+  }, []);
   const displayAlert = (type, message) => {
     if (type != null && type == "success") {
       setVariant("success");
@@ -26,7 +30,35 @@ const Authority = () => {
     setRenderAlert(Date.now());
     setMessage(message);
   };
-
+  const deletePermission = async (id) => {
+    await fetch(`http://localhost:8080/api/v1/authorities/${id}`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        console.log("deleted with success");
+        getPermissions();
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
+  const getPermissions = async () => {
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    };
+    await fetch(`http://localhost:8080/api/v1/authorities`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data != null) {
+          setPermissions(data);
+          console.log(JSON.stringify(permissions));
+        }
+      })
+      .catch((error) => {
+        console.log(JSON.stringify(error));
+      });
+  };
   const saveAuthority = async (permission) => {
     const requestOptions = {
       method: "POST",
@@ -38,6 +70,7 @@ const Authority = () => {
       .then((data) => {
         if (data != null && data.id != null) {
           displayAlert("success", "Permission created with success");
+          getPermissions();
         } else {
           if (data != null && data.code == "1006") {
             displayAlert("warn", "Permission already exist");
@@ -121,61 +154,43 @@ const Authority = () => {
                 <Col className="form-col">
                   <Card className="permission-container">
                     <Card.Body>
-                      <Card.Text>
-                        <Table striped bordered hover size="sm">
-                          <thead>
-                            <tr>
-                              <th>Permission Name</th>
-                              <th className="cell-edit-authority"></th>
-                              <th className="cell-edit-authority"></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Create</td>
-                              <td>
-                                <Button
-                                  className="btn-edit-authority"
-                                  variant="primary"
-                                  size="sm"
-                                >
-                                  Edit
-                                </Button>
-                              </td>
-                              <td>
-                                <Button
-                                  className="btn-edit-authority"
-                                  variant="danger"
-                                  size="sm"
-                                >
-                                  Delete
-                                </Button>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>Read</td>
-                              <td>
-                                <Button
-                                  className="btn-edit-authority"
-                                  variant="primary"
-                                  size="sm"
-                                >
-                                  Edit
-                                </Button>
-                              </td>
-                              <td>
-                                <Button
-                                  className="btn-edit-authority"
-                                  variant="danger"
-                                  size="sm"
-                                >
-                                  Delete
-                                </Button>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </Table>
-                      </Card.Text>
+                      <Table striped bordered hover size="sm">
+                        <thead>
+                          <tr>
+                            <th>Permission Name</th>
+                            <th className="cell-edit-authority"></th>
+                            <th className="cell-edit-authority"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {permissions.map((item) => {
+                            return (
+                              <tr key={item.id}>
+                                <td>{item.permission}</td>
+                                <td>
+                                  <Button
+                                    className="btn-edit-authority"
+                                    variant="primary"
+                                    size="sm"
+                                  >
+                                    Edit
+                                  </Button>
+                                </td>
+                                <td>
+                                  <Button
+                                    className="btn-edit-authority"
+                                    variant="danger"
+                                    size="sm"
+                                    onClick={() => deletePermission(item.id)}
+                                  >
+                                    Delete
+                                  </Button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </Table>
                     </Card.Body>
                   </Card>
                 </Col>
