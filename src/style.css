@@ -290,3 +290,8 @@ padding-top: 20px;
 .cell-edit-authority{
   width: 90px;
 }
+.permission-pagination{
+  width: 36%;
+    margin: auto;
+    padding: 0;
+}

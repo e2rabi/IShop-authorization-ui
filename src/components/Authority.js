@@ -8,6 +8,7 @@ import { Col } from "react-bootstrap";
 import { Container, Row } from "react-bootstrap";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { useState, useEffect } from "react";
+import Pagination from "react-bootstrap/Pagination";
 
 const Authority = () => {
   const [permission, setPermission] = useState("");
@@ -16,6 +17,7 @@ const Authority = () => {
   const [message, setMessage] = useState("");
   const [renderAlert, setRenderAlert] = useState(Date.now());
   const [permissions, setPermissions] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     getPermissions();
@@ -47,12 +49,15 @@ const Authority = () => {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
-    await fetch(`http://localhost:8080/api/v1/authorities`, requestOptions)
+    await fetch(
+      `http://localhost:8080/api/v1/authorities?page=0&size=4`,
+      requestOptions
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data != null) {
-          setPermissions(data);
-          console.log(JSON.stringify(permissions));
+          setPermissions(data.content);
+          setTotalPages(data.totalPages);
         }
       })
       .catch((error) => {
@@ -192,6 +197,21 @@ const Authority = () => {
                         </tbody>
                       </Table>
                     </Card.Body>
+                    <Card.Footer className="text-muted" size="sm">
+                      <Pagination className="permission-pagination">
+                        <Pagination.First />
+                            {(() => {
+                                  const arr = [];
+                                  for (let i = 0; i < totalPages; i++) {
+                                      arr.push(
+                                        <Pagination.Item key={i}>{i}</Pagination.Item>
+                                      );
+                                  }
+                                  return arr;
+                              })()}
+                        <Pagination.Last />
+                      </Pagination>
+                    </Card.Footer>
                   </Card>
                 </Col>
               </Row>
