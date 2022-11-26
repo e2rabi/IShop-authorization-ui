@@ -20,7 +20,7 @@ const Authority = () => {
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    getPermissions();
+    getPermissions(0);
   }, []);
   const displayAlert = (type, message) => {
     if (type != null && type == "success") {
@@ -44,13 +44,13 @@ const Authority = () => {
         console.log(JSON.stringify(error));
       });
   };
-  const getPermissions = async () => {
+  const getPermissions = async (page) => {
     const requestOptions = {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     };
     await fetch(
-      `http://localhost:8080/api/v1/authorities?page=0&size=4`,
+      `http://localhost:8080/api/v1/authorities?page=${page}&size=4`,
       requestOptions
     )
       .then((response) => response.json())
@@ -164,7 +164,6 @@ const Authority = () => {
                           <tr>
                             <th>Permission Name</th>
                             <th className="cell-edit-authority"></th>
-                            <th className="cell-edit-authority"></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -172,15 +171,6 @@ const Authority = () => {
                             return (
                               <tr key={item.id}>
                                 <td>{item.permission}</td>
-                                <td>
-                                  <Button
-                                    className="btn-edit-authority"
-                                    variant="primary"
-                                    size="sm"
-                                  >
-                                    Edit
-                                  </Button>
-                                </td>
                                 <td>
                                   <Button
                                     className="btn-edit-authority"
@@ -204,7 +194,7 @@ const Authority = () => {
                                   const arr = [];
                                   for (let i = 0; i < totalPages; i++) {
                                       arr.push(
-                                        <Pagination.Item key={i}>{i}</Pagination.Item>
+                                        <Pagination.Item onClick={()=>getPermissions(i)} key={i}>{i}</Pagination.Item>
                                       );
                                   }
                                   return arr;

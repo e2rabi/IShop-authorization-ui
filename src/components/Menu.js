@@ -15,7 +15,7 @@ const Menu = () => {
   };
   const [currentUser] = useContext(UserContext);
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar bg="light" expand="lg" className="menu-bg">
       <Container>
         <Navbar.Brand href="#home" className="ishop-brand">
           ISHOP Authorization

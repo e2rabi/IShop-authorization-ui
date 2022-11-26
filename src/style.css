@@ -286,12 +286,16 @@ padding-top: 20px;
 .btn-edit-authority{
   width: 70px;
   margin: auto;
+  display: block;
 }
 .cell-edit-authority{
   width: 90px;
 }
 .permission-pagination{
-  width: 36%;
+  width: 22%;
     margin: auto;
     padding: 0;
+}
+.menu-bg{
+  background-color: #f09819 !important ;
 }
